@@ -3,7 +3,6 @@ const path = require('path');
 const parser = require('body-parser');
 const morgan = require('morgan');
 const PORT = 3004;
-const seed = require('../database/seed.js');
 const db = require('../database/index.js');
 const { getSimilar, getLike } = require('./controller.js');
 

@@ -1,18 +1,41 @@
 const { SimilarList, LikeList } = require('../database/index.js');
 
 const getSimilar = (req, res) => {
+  console.time('QUERY SIMILAR PRODUCTS')
   let { id } = req.params;
   SimilarList
-    .find({ id })
-    .then(data => res.status(200).json(data[0].similar))
+    .find({ "id": id })
+    .then(data => {
+      SimilarList
+      .find({ id: { $in: [...data[0].similar] }})
+      .then(products => {
+        console.timeEnd('QUERY SIMILAR PRODUCTS');        
+        res.status(200).json(products)
+      })
+      .catch(err => {
+        console.error(err)
+        res.status(404).end();
+      })
+    })
     .catch(err => console.log(err))
 }
 
 const getLike = (req, res) => {
   let { id } = req.params;
   LikeList
-    .find({ id })
-    .then(data => res.status(200).json(data[0].like))
+    .find({ "id": id })
+    .then(data => { 
+      LikeList
+      .find({ id: { $in: data[0].similar }})
+      .then(products => {
+        console.log("LIKEPRODUCTS ||", products)
+        res.status(200).json(products)
+      })
+      .catch(err => {
+        console.error(err)
+        res.status(404).end();
+      })
+    })
     .catch(err => console.log(err))
 }
 

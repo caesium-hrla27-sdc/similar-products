@@ -24,3 +24,7 @@ coverage
 build/
 dist/
 public/bundle.js
+
+# Disregard data files
+products.json
+*.csv

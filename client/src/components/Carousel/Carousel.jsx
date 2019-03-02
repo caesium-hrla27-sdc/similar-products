@@ -25,7 +25,7 @@ class Carousel extends Component {
 
   componentDidMount() {
     axios
-      .get(`/similar`)
+      .get(`/similar/${this.props.id}`, { params: { id: this.props.id }})
       .then(({ data }) => {
         this.setState({ list: [...data] });
       })
