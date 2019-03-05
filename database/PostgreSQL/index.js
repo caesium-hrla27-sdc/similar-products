@@ -4,7 +4,7 @@ const pool = new Pool();
 await pool.connect({
   user: 'postgres',
   host: 'localhost',
-  database: 'postgres'
+  database: 'similar_and_like'
 });
 
 module.exports = pool;
