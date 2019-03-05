@@ -10,6 +10,16 @@ const randomNumberArr = (len) => {
   return Array.from({length: len}, () => Number((Math.random() * 100).toFixed(2)));
 }
 
+// return boolean according to chance
+const getTrueByChance = (chance) => {
+  return Math.random >= chance;
+}
+
+// generate random id from ten million ids
+const getRand = () => {
+  return Math.floor(Math.random() * 10000000);
+}
+
 const generateSimilarList = (data) => {
   const result = [];
   for (let i = 1; i <= 100; i++) {
