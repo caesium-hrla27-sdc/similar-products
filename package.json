@@ -12,7 +12,8 @@
     "start": "nodemon ./server/index.js",
     "build": "webpack --watch",
     "seedmock": "node ./database/seed.js",
-    "seedmass": "node ./database/testStream.js"
+    "seedmassmongo": "node ./database/MongoDB/testStream.js",
+    "seedmasspostgres": "node ./database/PostgreSQL/streamData.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -22,6 +23,7 @@
     "mongoose": "^5.4.10",
     "node": "^11.9.0",
     "nodemon": "^1.18.9",
+    "pg": "^7.8.1",
     "react": "^16.8.1",
     "react-css-modules": "^4.7.9",
     "react-dom": "^16.8.1"

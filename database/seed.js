@@ -1,4 +1,4 @@
-const { SimilarList, LikeList } = require('./index.js');
+const { SimilarList, LikeList } = require('./MongoDB/index.js');
 const mockData = require('../MOCK_DATA.js');
 const {
   randomNumberDec,

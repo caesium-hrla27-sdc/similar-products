@@ -6,7 +6,7 @@ const {
   randomNumberArr,
   generateSimilarList,
   generateLikeList
-} = require('./helpers.js');
+} = require('../helpers.js');
     
 const file = fs.createWriteStream('./products.json');
 
