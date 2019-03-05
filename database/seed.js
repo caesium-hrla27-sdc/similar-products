@@ -1,12 +1,12 @@
-const { SimilarList, LikeList } = require('./index.js');
-const mockData = require('../../MOCK_DATA.js');
+const { SimilarList, LikeList } = require('./MongoDB/index.js');
+const mockData = require('../MOCK_DATA.js');
 const {
   randomNumberDec,
   randomNumberInt,
   randomNumberArr,
   generateSimilarList,
   generateLikeList
-} = require('../helpers.js');
+} = require('./helpers.js');
 
 const imgArray = [
   'https://s3-us-west-1.amazonaws.com/ho-fec-similar/s1217710-main-hero-300.jpg',
