@@ -1,4 +1,4 @@
-const { SimilarList, LikeList } = require('../database/PostgreSQL/index.js');
+const { SimilarList, LikeList } = require('../../database/MongoDB/index.js');
 
 const getSimilar = (req, res) => {
   console.time('QUERY SIMILAR PRODUCTS')

@@ -11,7 +11,8 @@ const {
 const file = fs.createWriteStream('./products.json');
 
 let dataGeneration = (i) => {
-  let result = [];
+  let similarResult = [];
+  let likeResult = [];
   let product = {
     id: i,
     product_name: faker.random.word(),
@@ -34,10 +35,12 @@ let dataGeneration = (i) => {
   };
 
   for (let i = 0; i < 15; i++) {
-    result.push(Math.floor(Math.random() * 10000000))
+    similarResult.push(Math.floor(Math.random() * 10000000));
+    likeResult.push(Math.floor(Math.random() * 10000000));
   }
 
-  product.similar = result;
+  product.similar = similarResult;
+  product.like = likeResult;
 
   return product;
 }
@@ -57,7 +60,7 @@ function writeOneMillionTimes(file) {
         // see if we should continue, or wait
         // don't pass the callback, because we're not done yet.
         ok = file.write(JSON.stringify(dataGeneration(i)), 'utf-8');
-        if (i % 100000 === 0) console.log(i)
+        if (i % 100000 === 0) console.log('Writing ten million products:',`${i / 100000}%`)
       }
     } while (i < upperLim && ok);
     if (i > 0) {

@@ -6,8 +6,28 @@ const randomNumberInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+const randomNumberArrDB = (len) => {
+  let arr = Array.from({length: len}, () => Number((Math.random() * 100).toFixed(2)));
+  let str = "";
+  for (let i = 0; i < arr.length; i++) {
+    str += " " + arr[i];
+  }
+
+  return str.substring(1);
+}
+
 const randomNumberArr = (len) => {
   return Array.from({length: len}, () => Number((Math.random() * 100).toFixed(2)));
+}
+
+// return boolean according to chance
+const getTrueByChance = (chance) => {
+  return Math.random >= chance;
+}
+
+// generate random id from ten million ids
+const getRand = () => {
+  return Math.floor(Math.random() * 10000000) + 1;
 }
 
 const generateSimilarList = (data) => {
@@ -41,6 +61,9 @@ module.exports = {
   randomNumberDec,
   randomNumberInt,
   randomNumberArr,
+  randomNumberArrDB,
   generateSimilarList,
-  generateLikeList
+  generateLikeList,
+  getRand,
+  getTrueByChance
 };

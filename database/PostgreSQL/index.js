@@ -1,10 +1,9 @@
 const { Pool, Client } = require('pg');
-const pool = new Pool();
 
-await pool.connect({
+const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
-  database: 'postgres'
+  database: 'similar_and_like'
 });
 
 module.exports = pool;
