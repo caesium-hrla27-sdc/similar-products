@@ -60,6 +60,7 @@ const generateLikeList = (data) => {
 module.exports = {
   randomNumberDec,
   randomNumberInt,
+  randomNumberArr,
   randomNumberArrDB,
   generateSimilarList,
   generateLikeList,
