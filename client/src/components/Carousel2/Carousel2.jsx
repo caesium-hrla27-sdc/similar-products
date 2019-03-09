@@ -7,7 +7,6 @@ import ArrowR from './ArrowR.jsx';
 import Bottom from '../Bottom';
 import axios from 'axios';
 
-let randid = Math.floor(Math.random() * 10000000);
 class Carousel extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +25,7 @@ class Carousel extends Component {
 
   componentDidMount() {
     axios
-      .get(`/like/${randid}`, { params: { id: randid }})
+      .get(`/like/${this.props.id}`, { params: { id: this.props.id }})
       .then(({ data }) => {
         this.setState({ list: [...data] });
       })
