@@ -9,17 +9,17 @@ const {
 } = require('../helpers.js');
 
 // Create write streams for three tables
-// const products = fs.createWriteStream('products.csv');
+const products = fs.createWriteStream('products.csv');
 const similarProducts = fs.createWriteStream('similarProducts.csv');
 const likeProducts = fs.createWriteStream('likeProducts.csv');
 
 // Generate data string for CSV format
 const dataGeneration = (i) => {
   // Data Initialization
-  let str = '';
   let id = i;
-  let product_name = faker.random.words();
-  let category = faker.commerce.productAdjective();
+  let product_name = faker.commerce.productName();
+  let category = randomNumberInt(1,25);
+  let kind = randomNumberInt(1,100);
   let size = randomNumberArrDB(randomNumberInt(1,5));
   let description = faker.lorem.words(Math.floor(Math.random() * 12 + 1));
   let sku = randomNumberInt(1000000,2000000);
@@ -33,28 +33,22 @@ const dataGeneration = (i) => {
   let free_shipping = getTrueByChance(0.7);
   let price = randomNumberDec(1,200);
   let image = Math.floor(Math.random() * 1000) + 1;
-
   // Create string
-  str = `${id},"${product_name}",${category},${size},"${description}",${sku},${stars},${reviews},${badge},${loves},${exclusive},${online_only},${limited_edition},${free_shipping},${price},https://picsum.photos/300/300/?image=${image}\n`
-  return str;
+  return `${id},"${product_name}",${category},${kind},${size},"${description}",${sku},${stars},${reviews},${badge},${loves},${exclusive},${online_only},${limited_edition},${free_shipping},${price},https://picsum.photos/300/300/?image=${image}\n`
 }
 
-// Create similar or like products list
-const similarOrLikeProductsDataGeneration = (i) => {
-  let similarStr = `${i},`;
-  for (let j = 0; j < 15; j++) {
-    (
-      j === 14 
-      ? similarStr += getRand() + '\n'
-      : similarStr += getRand() + ','
-    )
-  }
-  return similarStr;
+let category = ['face','cheek','eye','lip','brushes&applicators','accessories','nail','cleanMakeup','makeupPalettes','miniSize','value&GiftSets','justArrived','bestSellers','moisturizers','cleansers','treatments','highTech','innerBeauty','masks','eyeCare','sunCare','selfTanners','lipTreatments','shampoo','conditioner'];
+
+const similarProductsDataGen = (i) => {
+  return `${i},"${faker.random.word()}"\n`;
 }
 
-// Generate ten million records
-const writeProductsTenMillionTimes = (productsFile) => {
-  let upperLim = 10000000;
+const likeProductsDataGen = (i) => {
+  return `${i},${category[i]}\n`;
+}
+
+const writeProductsTenMillionTimes = (productsStream, type, cb, lim) => {
+  let upperLim = lim;
   var i = 0;
   write();
   function write() {
@@ -63,58 +57,27 @@ const writeProductsTenMillionTimes = (productsFile) => {
       i += 1;
       if (i === upperLim) {
         // last iteration
-        productsFile.write(dataGeneration(i), 'utf-8');
+        productsStream.write(cb(i), 'utf-8');
         console.log('DONE');
       } else if (i === 1) {
-        productsFile.write(`id,product_name,category,size,description,sku,stars,reviews,badge,loves,exclusive,online_only,limited_edition,free_shipping,price,image\n`, 'utf-8');
-        productsFile.write(dataGeneration(i), 'utf-8');
+        productsStream.write(`id,${type}\n`);
+        productsStream.write(cb(i), 'utf-8');
       } else {
         // see if we should continue, or wait
         // don't pass the callback, because we're not done yet.
-        ok = productsFile.write(dataGeneration(i), 'utf-8');
-          if (i % 100000 === 0) console.log('Writing ten million products:',`${i / 100000}%`)
-      }
-    } while (i < upperLim && ok);
-      if (i > 0) {
-        // had to stop early!
-        // write some more once it drains
-        productsFile.once('drain', write);
-    }
-    return;
-  }
-}
-
-const writeSimilarOrLikeTenMillionTimes = (similarOrLikeProducts) => {
-  let upperLim = 10000000;
-  var i = 0;
-  write();
-  function write() {
-    var ok = true;
-    do {
-      i += 1;
-      if (i === upperLim) {
-        // last iteration
-        similarOrLikeProducts.write(similarOrLikeProductsDataGeneration(i), 'utf-8');
-        console.log('DONE');
-      } else if (i === 1) {
-        similarOrLikeProducts.write(`id,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15\n`);
-        similarOrLikeProducts.write(similarOrLikeProductsDataGeneration(i), 'utf-8');
-      } else {
-        // see if we should continue, or wait
-        // don't pass the callback, because we're not done yet.
-        ok = similarOrLikeProducts.write(similarOrLikeProductsDataGeneration(i), 'utf-8');
+        ok = productsStream.write(cb(i), 'utf-8');
         if (i % 100000 === 0) console.log("Generating ten million similar products list:",`${i / 100000}%`);
       }
     } while (i < upperLim && ok);
       if (i > 0) {
         // had to stop early!
         // write some more once it drains
-        similarOrLikeProducts.once('drain', write);
+        productsStream.once('drain', write);
     }
     return;
   }
 }
 
-// writeProductsTenMillionTimes(products);
-writeSimilarOrLikeTenMillionTimes(similarProducts);
-writeSimilarOrLikeTenMillionTimes(likeProducts);
+writeProductsTenMillionTimes(products,'product_name,category,size,description,sku,stars,reviews,badge,loves,exclusive,online_only,limited_edition,free_shipping,price,image',dataGeneration,10000000);
+writeProductsTenMillionTimes(similarProducts,'kind',similarProductsDataGen,100);
+writeProductsTenMillionTimes(likeProducts,'category',likeProductsDataGen,25);
