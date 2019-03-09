@@ -20,7 +20,7 @@ class ModalBottomRight extends Component {
       <div className={ styles.container }>
         <div className={ styles.priceContainer }>
           <div className={ styles.price }>
-            { this.props.price }
+            { `$${this.props.price}` }
           </div>
           <div className={ styles.promo }>
             { this.props.free ? 'Free shipping' : '' }
