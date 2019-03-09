@@ -24,7 +24,22 @@ const getLike = (req, res) => {
   })
 }
 
+const updateLove = (req, res) => {
+
+}
+
+const putProduct = (req, res) => {
+
+}
+
+const deleteProduct = (req, res) => {
+
+}
+
 module.exports = {
   getSimilar,
-  getLike
+  getLike,
+  updateLove, 
+  putProduct, 
+  deleteProduct
 }
