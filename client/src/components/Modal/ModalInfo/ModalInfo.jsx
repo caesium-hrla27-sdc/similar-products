@@ -11,7 +11,7 @@ class ModalInfo extends Component {
   }
 
   componentDidMount() {
-    if (this.props.size.length > 1) {
+    if (this.props.size.split(' ').length > 1) {
       this.setState({ single: false });
     }
   }
@@ -23,21 +23,21 @@ class ModalInfo extends Component {
 
     let { single } = this.state;
     let { selected, hovered, hoverIndex, variationSKU } = this.props;
-
+    let sizeArray = this.props.size.split(' ');
     let sizeSpan;
     if (!hovered) {
-      sizeSpan = <span>SIZE { oz(this.props.size[selected]) } oz/ { this.props.size[selected] } mL
+      sizeSpan = <span>SIZE { oz(sizeArray[selected]) } oz/ { sizeArray[selected] } mL
         <span className={ styles.bullet }>•</span></span>;
     }
 
     let variationSize;
     if (!single && !hovered) {
       variationSize = <span className={ styles.variationText }>
-        SIZE { oz(this.props.size[selected]) } oz/ { this.props.size[selected] } mL
+        SIZE { oz(sizeArray[selected]) } oz/ { sizeArray[selected] } mL
       </span>
     } else if (!single && hovered) {
       variationSize = <span className={ styles.variationText }>
-        SIZE { oz(this.props.size[hoverIndex]) } oz/ { this.props.size[hoverIndex] } mL
+        SIZE { oz(sizeArray[hoverIndex]) } oz/ { sizeArray[hoverIndex] } mL
       </span>
     }
 
@@ -66,14 +66,14 @@ class ModalInfo extends Component {
         { variationSize }
         <div className={ single ? styles.hidden : styles.variationBox }>
           <div className={ styles.variationWrapper }>
-            {this.props.size.map((item, i) => {
+            {sizeArray.map((item, i) => {
               return (
                 <div
                 key={ i }
                 className={ styles.variationItem }>
                   <button
                   id={ i }
-                  className={ item === this.props.size[selected] ? styles.variationButtonSelect : styles.variationButton }
+                  className={ item === sizeArray[selected] ? styles.variationButtonSelect : styles.variationButton }
                   onMouseEnter={ e => this.props.onHover(e) }
                   onMouseLeave={ e => this.props.resetSelect(e) }
                   >
