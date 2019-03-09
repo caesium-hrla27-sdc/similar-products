@@ -13,7 +13,8 @@
     "build": "webpack --watch",
     "seedmock": "node ./database/seed.js",
     "seedmassmongo": "node ./database/MongoDB/testStream.js",
-    "seedmasspostgres": "node ./database/PostgreSQL/streamData.js"
+    "seedmasspostgres": "node ./database/PostgreSQL/streamData.js",
+    "postgresTest": "node ./database/PostgreSQL/test.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
