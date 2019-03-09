@@ -1,59 +1,45 @@
-const { pool } = require('../../database/PostgreSQL/index.js');
+const pool = require('../../database/PostgreSQL/index.js');
 
 const getSimilar = (req, res) => {
-  console.time('QUERY SIMILAR PRODUCTS')
   let { id } = req.params;
   
-  pool.query(`SELECT kind FROM products WHERE id=${id};`, (err, data) => {
+  pool.query(`SELECT * FROM products p1 INNER JOIN products p2 ON p1.kind=p2.kind WHERE p1.id=${id} LIMIT 15;`, (err, response) => {
     if (err) {
       console.error(err);
     } else {
-      let similarId = data.rows[0].category;
-      pool.query(`SELECT * FROM products p INNER JOIN kinds k ON k.id=p.kind WHERE k.id=${similarId} LIMIT 15;`, (err, product) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.timeEnd('QUERY SIMILAR PRODUCTS');        
-          res.status(200).json(response);
-        }
-      })
+      res.status(200).json(response.rows);
     }
   })
 }
 
 const getLike = (req, res) => {
-  console.time('QUERY LIKE PRODUCTS')
   let { id } = req.params;
   
-  pool.query(`SELECT * FROM likes WHERE id=${id};`, (err, data) => {
+  pool.query(`SELECT * FROM products p1 INNER JOIN products p2 ON p1.category=p2.category WHERE p1.id=${id} LIMIT 15;`, (err, response) => {
     if (err) {
       console.error(err);
     } else {
-      let obj = data.rows[0];
-      let response = [];
-      for (let key in obj) {
-        await pool.query(`SELECT * FROM products WHERE id=${obj[key]};`, (err, product) => {
-          if (err) {
-            console.error(err);
-          } else {
-            response.push(product.rows[0])
-          }
-        })
-      }
-      console.timeEnd('QUERY LIKE PRODUCTS');        
-      res.status(200).json(response);
+      res.status(200).json(response.rows);
     }
   })
 }
 
-// const getSimilar = (req, res) => {
-//   SimilarList
-//     .aggregate([{ $sample: { size:15 } }])
-//     .then(data => res.status(200).json(data))
-//     .catch(err => console.log(err))
-// }
+const updateLove = (req, res) => {
+
+}
+
+const putProduct = (req, res) => {
+
+}
+
+const deleteProduct = (req, res) => {
+
+}
 
 module.exports = {
   getSimilar,
-  getLike
+  getLike,
+  updateLove, 
+  putProduct, 
+  deleteProduct
 }

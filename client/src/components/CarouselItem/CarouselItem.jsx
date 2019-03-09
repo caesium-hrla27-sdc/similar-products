@@ -47,7 +47,7 @@ class Entry extends Component {
                 {this.props.name}
               </span>
               <div className={ styles.price }>
-                {this.props.price}
+                ${this.props.price}
               </div>
             </div>
 
