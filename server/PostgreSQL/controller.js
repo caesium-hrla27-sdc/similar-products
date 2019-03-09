@@ -1,4 +1,4 @@
-const { pool } = require('../../database/PostgreSQL/index.js');
+const pool = require('../../database/PostgreSQL/index.js');
 
 const getSimilar = (req, res) => {
   let { id } = req.params;
@@ -7,20 +7,19 @@ const getSimilar = (req, res) => {
     if (err) {
       console.error(err);
     } else {
-      res.status(200).json(response);
+      res.status(200).json(response.rows);
     }
   })
 }
 
 const getLike = (req, res) => {
-  console.time('QUERY LIKE PRODUCTS')
   let { id } = req.params;
   
   pool.query(`SELECT * FROM products p1 INNER JOIN products p2 ON p1.category=p2.category WHERE p1.id=${id} LIMIT 15;`, (err, response) => {
     if (err) {
       console.error(err);
     } else {
-      res.status(200).json(response);
+      res.status(200).json(response.rows);
     }
   })
 }
