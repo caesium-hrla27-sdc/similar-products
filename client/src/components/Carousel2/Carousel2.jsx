@@ -78,6 +78,7 @@ class Carousel extends Component {
 
                     name={item.product_name}
                     category={item.category}
+                    kind={item.kind}
                     size={item.size}
                     description={item.description}
                     sku={item.sku}
