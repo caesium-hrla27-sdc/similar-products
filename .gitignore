@@ -28,3 +28,4 @@ public/bundle.js
 # Disregard data files
 products.json
 *.csv
+productsBackUp.sql

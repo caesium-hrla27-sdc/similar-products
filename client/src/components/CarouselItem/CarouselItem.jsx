@@ -3,11 +3,30 @@ import styles from './CarouselItem.css';
 import Image from '../Image';
 import Stars from '../Stars';
 import Love from '../Love';
+import axios from 'axios';
 
 class Entry extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loved: false
+    }
+
+    // this.handleLove = this.handleLove.bind(this);
   }
+
+  handleLove() {() => {
+    if (this.state.loved) {
+      axios
+      .put(`/love/${this.props.id}`, { params: { id: this.props.id, love: -1 }})
+      .catch(err => console.error(err));
+    } else {
+      axios
+      .put(`/love/${this.props.id}`, { params: { id: this.props.id, love: 1 }})
+      .catch(err => console.error(err));
+    }
+    this.setState({ loved: !this.state.loved });
+  }}
 
   render() {
     return (
@@ -26,8 +45,8 @@ class Entry extends Component {
               <div className={ styles.loveContainer }>
                 <button
                 className={ styles.loveButton }
-                onClick={ () => this.props.handleLove() }>
-                  <Love loved={ this.props.loved } />
+                onClick={ () => this.handleLove() }>
+                  <Love loved={ this.state.loved } />
                 </button>
               </div>
             </div>
