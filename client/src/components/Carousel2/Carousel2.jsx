@@ -18,9 +18,8 @@ class Carousel extends Component {
     };
     this.clickBottom = this.clickBottom.bind(this);
     this.clickLeft = this.clickLeft.bind(this);
-    this.clickRight = this.clickRight.bind(this);
+    this.clickRight = this.clickRight.bind(this);4
     this.showModal = this.showModal.bind(this);
-    this.handleLove = this.handleLove.bind(this);
   }
 
   componentDidMount() {
@@ -48,10 +47,6 @@ class Carousel extends Component {
     this.setState({ show: index });
   }
 
-  handleLove() {
-    this.setState({ loved: !this.state.loved });
-  }
-
   render() {
     let { scroll } = this.state;
     let move = styles.innerContainer;
@@ -71,10 +66,9 @@ class Carousel extends Component {
                   <CarouselItem
                     key={i}
                     index={i}
+                    id={item.id}
                     showModal={this.showModal}
                     handleLove={this.handleLove}
-                    loved={this.state.loved}
-
                     name={item.product_name}
                     category={item.category}
                     kind={item.kind}
