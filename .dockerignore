@@ -19,3 +19,5 @@ logs
 
 products.json
 productsBackUp.sql
+MOCK_DATA.js
+test.js
