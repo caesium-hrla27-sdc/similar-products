@@ -1,6 +1,10 @@
+# Ignore client files and system files
 client
 .DS_Store
+.git
+.gitignore
 
+# Ignore markdown files, and node modules
 README.md
 STYLE-GUIDE.md
 node_modules
@@ -8,16 +12,23 @@ node_modules
 env.*
 Dockerfile
 
+# Avoid storing data files
 *.csv
 *.sql
 
+# Avoid storing log files
 npm-debug.log
 pids
 *.pid
 logs
 *.log
 
+# Avoid storing other data files and test files
 products.json
 productsBackUp.sql
 MOCK_DATA.js
-test.js
+database/MongoDB/test.js
+database/PostgreSQL/test.js
+
+# Not using newrelic for performance
+newrelic.js
