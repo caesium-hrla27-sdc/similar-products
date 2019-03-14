@@ -1,8 +1,10 @@
 const pool = require('../../database/PostgreSQL/index.js');
 
+let generateRandomId = () => Math.floor(Math.random() * 10000000) + 1;
+
 const getSimilar = (req, res) => {
-  console.log("IN GET SIMILAR");
-  let { id } = req.params;
+  // let { id } = req.params;
+  let id = generateRandomId();
   
   pool.query(`SELECT * FROM products p1 INNER JOIN products p2 ON p1.kind=p2.kind WHERE p1.id=${id} LIMIT 15;`, (err, response) => {
     if (err) {
@@ -15,8 +17,8 @@ const getSimilar = (req, res) => {
 }
 
 const getLike = (req, res) => {
-  console.log("IN GET LIKE");
-  let { id } = req.params;
+  // let { id } = req.params;
+  let id = generateRandomId();
   
   pool.query(`SELECT * FROM products p1 INNER JOIN products p2 ON p1.category=p2.category WHERE p1.id=${id} LIMIT 15;`, (err, response) => {
     if (err) {
@@ -29,7 +31,6 @@ const getLike = (req, res) => {
 }
 
 const updateLove = (req, res) => {
-  console.log("IN UPDATE");
   let { id, love } = req.params;
 
   pool.query(`UPDATE products SET loves = loves + ${love} WHERE id = ${id};`, (err) => {
@@ -43,8 +44,8 @@ const updateLove = (req, res) => {
 }
 
 const postProduct = (req, res) => {
-  console.log("IN POST");
-  let { id, item_name, quantity } = req.params;
+  // let { id, item_name, quantity } = req.params;
+  let id = generateRandomId();
 
   pool.query(`INSERT INTO baskets (id, item_name, quantity) VALUES (${id}, ${item_name}, ${quantity});`, err => {
     if (err) {
@@ -57,7 +58,6 @@ const postProduct = (req, res) => {
 }
 
 const deleteProduct = (req, res) => {
-  console.log("IN DELETE");
   let { id } = req.params;
 
   pool.query(`DELETE FROM baskets WHERE product_id=${id};`, err => {

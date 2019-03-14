@@ -13,8 +13,8 @@ app.use(parser.urlencoded({ extended: true }));
 
 app.use(express.static(path.resolve(__dirname, '../public')));
 
-app.get('/similar/:id', getSimilar);
-app.get('/like/:id', getLike);
+app.get('/similar', getSimilar);
+app.get('/like', getLike);
 app.put('/love/:id', updateLove);
 app.post('/basket/in/:id', postProduct);
 app.delete('/basket/out/:id', deleteProduct);
