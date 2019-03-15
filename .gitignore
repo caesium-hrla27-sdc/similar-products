@@ -29,3 +29,4 @@ public/bundle.js
 products.json
 *.csv
 productsBackUp.sql
+public/*.txt
