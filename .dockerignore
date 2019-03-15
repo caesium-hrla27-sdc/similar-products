@@ -32,3 +32,6 @@ database/PostgreSQL/test.js
 
 # Not using newrelic for performance
 newrelic.js
+
+# Ignore API key
+public/*.txt
